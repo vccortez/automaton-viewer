@@ -1,0 +1,59 @@
+{
+  "nome": "Nome do Automata",
+  "estados": [
+    {
+      "id": 1,
+      "nome": "q1"
+    },
+    {
+      "id": 2,
+      "nome": "q2"
+    },
+    {
+      "id": 3,
+      "nome": "q3"
+    },
+    {
+      "id": 4,
+      "nome": "q4"
+    }
+  ],
+  "inicial": [
+    1
+  ],
+  "final": [
+    4, 3
+  ],
+  "transicoes": [
+    {
+      "de": 1,
+      "para": 2,
+      "evento": "a"
+    },
+    {
+      "de": 1,
+      "para": 1,
+      "evento": "b"
+    },
+    {
+      "de": 2,
+      "para": 4,
+      "evento": "b"
+    },
+    {
+      "de": 1,
+      "para": 3,
+      "evento": "c"
+    },
+    {
+      "de": 3,
+      "para": 2,
+      "evento": "b"
+    },
+    {
+      "de": 4,
+      "para": 2,
+      "evento": "b"
+    }
+  ]
+}

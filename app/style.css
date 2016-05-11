@@ -1,0 +1,39 @@
+.container {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  grid-template-rows: 1fr 3fr 3fr;
+}
+
+.form-area {
+  -border: 1px dashed black;
+  height: 95vh;
+  grid-column: 1 / 2;
+  grid-row: 1 / span 3;
+}
+
+.op-area {
+  -border: 1px dashed black;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+.aut {
+  -border: 1px dashed black;
+  height: 100%;
+  width: 100%;
+  grid-column: 2 / 3;
+  justify-self: stretch;
+  align-self: stretch;
+}
+
+.aut.a {
+  grid-row: 2 / 3;
+}
+
+.aut.b {
+  grid-row: 3 / 4;
+}
+
+.form-area form fieldset div {
+  display: list-item;
+}
