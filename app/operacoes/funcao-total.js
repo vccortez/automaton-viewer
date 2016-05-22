@@ -1,8 +1,6 @@
 function funcaoTotal(automato) {
   const eventos = new Set();
 
-  console.log(automato);
-
   for (let i = 0, l = automato.transicoes.length; i < l; ++i) {
     eventos.add(automato.transicoes[i].evento);
   }
