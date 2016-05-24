@@ -21,14 +21,24 @@ function parse(json) {
     return { id, label, group };
   });
 
-  const edges = json.transicoes.map(trs => {
-    let to, from, label;
+  const selfCircle = {};
+
+  const edges = json.transicoes.map((trs, i) => {
+    let to, from, label, selfReferenceSize = false;
 
     from = trs.de;
     to = trs.para;
     label = trs.evento;
 
-    return { from, to, label, arrows: 'to' };
+    if (from === to) {
+      if (selfCircle[from] == void(0))
+        selfCircle[from] = [];
+
+      selfCircle[from].push(label);
+      selfReferenceSize = (selfCircle[from].indexOf(label) + 1) * 10;
+    }
+
+    return { from, to, label, arrows: 'to', selfReferenceSize };
   });
 
   return { nodes: new DataSet(nodes), edges: new DataSet(edges) };
