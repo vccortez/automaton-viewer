@@ -1,8 +1,8 @@
 function funcaoTotal(automato) {
   const eventos = new Set();
 
-  for (let i = 0, l = automato.transicoes.length; i < l; ++i) {
-    eventos.add(automato.transicoes[i].evento);
+  for (let e of automato.transicoes) {
+    eventos.add(e.evento);
   }
 
   let id = automato.estados.length * 2;
@@ -16,7 +16,8 @@ function funcaoTotal(automato) {
     let estado = automato.estados[i];
 
     let transicoes = automato.transicoes
-      .filter(t => t.de === estado.id).map(t => t.evento);
+      .filter(t => t.de === estado.id)
+      .map(t => t.evento);
 
     for (let e of eventos) {
       if (transicoes.indexOf(e) === -1) {
@@ -29,10 +30,16 @@ function funcaoTotal(automato) {
     }
   }
 
+  if (total.length === 0)
+    return automato;
+
   automato.estados.push(dead);
-  for (let t of total) {
-    automato.transicoes.push(t);
+
+  for (let e of eventos) {
+    total.push({ de: dead.id, para: dead.id, evento: e });
   }
+
+  automato.transicoes = automato.transicoes.concat(total);
 
   return automato;
 }
