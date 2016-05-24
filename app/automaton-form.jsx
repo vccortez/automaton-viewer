@@ -3,12 +3,19 @@ const json = require('./example-automaton.json');
 
 const AutomatonForm = React.createClass({
   getInitialState() {
-    return { value: JSON.stringify(json, null, 2) };
+    return { form: '{}' };
+  },
+
+  componentWillReceiveProps(next) {
+    this.setState({
+      form: next.data,
+    });
   },
 
   onSubmit(event) {
     const textarea = this.refs.area;
     let jsonAut;
+
     try {
       jsonAut = JSON.parse(textarea.value);
     } catch (err) {
@@ -16,13 +23,13 @@ const AutomatonForm = React.createClass({
       return;
     }
 
-    this.props.action(jsonAut);
+    this.props.submit(jsonAut);
   },
 
   handleChange(event) {
-    this.setState({
-      value: event.target.value,
-    });
+    const json = this.refs.area.value;
+
+    this.props.change(json);
   },
 
   render() {
@@ -31,7 +38,7 @@ const AutomatonForm = React.createClass({
         <fieldset>
           <legend>Informações do Autômato</legend>
           <label for="json-area">JSON</label>
-          <textarea id="json-area" ref="area" value={this.state.value} onChange={this.handleChange}/>
+          <textarea id="json-area" ref="area" value={this.state.form} onChange={this.handleChange}/>
           <input type="button" value="Atualizar" onClick={this.onSubmit}/>
         </fieldset>
       </form>
