@@ -5,4 +5,5 @@
  */
 module.exports = {
   'Função Total': require('./funcao-total.js'),
+  'Minimização' : require('./minimizacao.js')
 };
