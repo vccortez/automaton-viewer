@@ -35,7 +35,7 @@ function parse(json) {
         selfCircle[from] = [];
 
       selfCircle[from].push(label);
-      selfReferenceSize = (selfCircle[from].indexOf(label) + 1) * 10;
+      selfReferenceSize = (selfCircle[from].indexOf(label) + 2) * 8;
     }
 
     return { from, to, label, arrows: 'to', selfReferenceSize };
