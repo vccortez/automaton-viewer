@@ -8,6 +8,10 @@ const AutomataViewer = React.createClass({
     return { data: {} };
   },
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return JSON.stringify(this.state.data) !== JSON.stringify(nextState.data);
+  },
+
   componentWillReceiveProps(nextProps) {
     //console.log('AutomataViewer will receive', nextProps);
     this.setState(nextProps);
