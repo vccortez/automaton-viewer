@@ -6,15 +6,17 @@ const operacoes = require('./operacoes');
 
 const App = React.createClass({
   getInitialState() {
-    return { data_a: {}, data_b: {}, form: null };
+    return { automata: {}, form: {} };
   },
 
   onViewerFocus(automatonData) {},
 
   formSubmit(automatonJSON) {
     this.setState({
-      data_a: automatonJSON,
-      data_b: automatonJSON,
+      automata: {
+        a: automatonJSON,
+        b: automatonJSON,
+      },
     });
   },
 
@@ -25,29 +27,38 @@ const App = React.createClass({
   onOperationCall(operacao, automato) {
     let json;
     if (automato === 'a') {
-      json = JSON.stringify(this.state.data_a);
+      json = JSON.stringify(this.state.automata.a);
       let newa = operacoes[operacao](JSON.parse(json));
       this.setState({
         form: JSON.stringify(newa, null, 2),
-        data_a: newa,
+        automata: {
+          b: this.state.automata.b,
+          a: newa,
+        },
       });
     } else {
-      json = JSON.stringify(this.state.data_b);
+      json = JSON.stringify(this.state.automata.b);
       let newb = operacoes[operacao](JSON.parse(json));
       this.setState({
         form: JSON.stringify(newb, null, 2),
-        data_b: newb,
+        automata: {
+          a: this.state.automata.a,
+          b: newb,
+        },
       });
     }
   },
 
   render() {
+    const a = this.state.automata.a || {};
+    const b = this.state.automata.a || {};
+
     return (
       <article className="container">
         <AutomatonForm data={this.state.form} submit={this.formSubmit} change={this.formChange}/>
         <OperationForm data={operacoes} action={this.onOperationCall}/>
-        <AutomataViewer data={this.state.data_a} cname="a"/>
-        <AutomataViewer data={this.state.data_b} cname="b"/>
+        <AutomataViewer data={a} cname="a"/>
+        <AutomataViewer data={b} cname="b"/>
       </article>
     );
   },
