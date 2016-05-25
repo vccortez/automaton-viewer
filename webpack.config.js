@@ -28,6 +28,7 @@ module.exports = {
       include: PATHS.app
     }]
   },
+  devtool: '#inline-source-map',
   devServer: {
     contentBase: PATHS.out
   }
