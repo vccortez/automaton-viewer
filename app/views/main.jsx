@@ -2,7 +2,8 @@ const React = require('react');
 const AutomatonForm = require('./automaton-form.jsx');
 const OperationForm = require('./operation-form.jsx');
 const AutomataViewer = require('./automaton-viewer.jsx');
-const operacoes = require('./operacoes');
+
+const operacoes = require('../operations/');
 
 const App = React.createClass({
   getInitialState() {

@@ -1,7 +1,7 @@
 const React = require('react');
 const vis = require('vis');
 const cls = require('classnames');
-const parse = require('./automata-parser.js');
+const parse = require('../automata-parser.js');
 
 const AutomataViewer = React.createClass({
   getInitialState() {
