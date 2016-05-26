@@ -6,7 +6,7 @@ const operacoes = require('./operacoes');
 
 const App = React.createClass({
   getInitialState() {
-    return { automata: {}, form: {} };
+    return {automata: {}, form: {}};
   },
 
   onViewerFocus(automatonData) {},
@@ -21,44 +21,34 @@ const App = React.createClass({
   },
 
   formChange(form) {
-    this.setState({ form });
+    this.setState({form});
   },
 
-  onOperationCall(operacao, automato) {
-    let json;
-    if (automato === 'a') {
-      json = JSON.stringify(this.state.automata.a);
-      let newa = operacoes[operacao](JSON.parse(json));
-      this.setState({
-        form: JSON.stringify(newa, null, 2),
-        automata: {
-          b: this.state.automata.b,
-          a: newa,
-        },
-      });
-    } else {
-      json = JSON.stringify(this.state.automata.b);
-      let newb = operacoes[operacao](JSON.parse(json));
-      this.setState({
-        form: JSON.stringify(newb, null, 2),
-        automata: {
-          a: this.state.automata.a,
-          b: newb,
-        },
-      });
-    }
+  onOperationCall(operacao, option) {
+    const copy = Object.assign({}, this.state.automata[option]);
+
+    const novo = operacoes[operacao](copy);
+
+    const other = option === 'a' ? 'b' : 'a';
+    this.setState({
+      form: JSON.stringify(novo, null, 2),
+      automata: {
+        [option]: novo,
+        [other]: this.state.automata[other]
+      }
+    });
   },
 
   render() {
     const a = this.state.automata.a || {};
-    const b = this.state.automata.a || {};
+    const b = this.state.automata.b || {};
 
     return (
-      <article className="container">
+      <article className='container'>
         <AutomatonForm data={this.state.form} submit={this.formSubmit} change={this.formChange}/>
         <OperationForm data={operacoes} action={this.onOperationCall}/>
-        <AutomataViewer data={a} cname="a"/>
-        <AutomataViewer data={b} cname="b"/>
+        <AutomataViewer data={a} cname='a'/>
+        <AutomataViewer data={b} cname='b'/>
       </article>
     );
   },
