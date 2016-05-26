@@ -1,9 +1,9 @@
 const React = require('react');
-const json = require('./example-automaton.json');
+const classes = require('classnames');
 
 const AutomatonForm = React.createClass({
   getInitialState() {
-    return { form: '{}' };
+    return {form: '{}'};
   },
 
   componentWillReceiveProps(next) {
@@ -33,13 +33,16 @@ const AutomatonForm = React.createClass({
   },
 
   render() {
+    const forms = classes('form-area', 'pure-form', 'pure-form-stacked');
+    const btns = classes('pure-button', 'pure-button-primary');
+
     return (
-      <form className="form-area">
+      <form className={forms}>
         <fieldset>
           <legend>Informações do Autômato</legend>
-          <label for="json-area">JSON</label>
-          <textarea id="json-area" ref="area" value={this.state.form} onChange={this.handleChange}/>
-          <input type="button" value="Atualizar" onClick={this.onSubmit}/>
+          <label for='json-area'>JSON</label>
+          <textarea id='json-area' ref='area' value={this.state.form} onChange={this.handleChange}/>
+          <input type='button' value='Atualizar' className={btns} onClick={this.onSubmit} />
         </fieldset>
       </form>
     );
