@@ -38,7 +38,7 @@ function parse(json) {
       selfReferenceSize = (selfCircle[from].indexOf(label) + 2) * 8;
     }
 
-    return { from, to, label, arrows: 'to', selfReferenceSize };
+    return { from, to, label, arrows: { to: { enabled: true, scaleFactor: 0.5 } }, selfReferenceSize };
   });
 
   return { nodes: new DataSet(nodes), edges: new DataSet(edges) };
