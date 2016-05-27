@@ -13,13 +13,10 @@ const AutomataViewer = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    //console.log('AutomataViewer will receive', nextProps);
     this.setState(nextProps);
   },
 
   componentWillUpdate(nextProps, nextState) {
-    //console.log('AutomataViewer will update', nextState);
-
     const data = nextState.data;
 
     if ('nome' in data == false)
@@ -27,20 +24,32 @@ const AutomataViewer = React.createClass({
 
     const container = this.refs.container;
 
-    const opts = {
-      groups: {
-        inicial: { color: { background: '#add8e6' } },
-        final: { color: { background: 'white' }, borderWidth: 4 },
-        'inicial-final': { color: { background: '#add8e6' }, borderWidth: 4 },
-        normal: { color: { background: 'white' } },
-      },
-      nodes: {
-        shape: 'circle',
-      },
+    const groups = {};
+
+    groups.normal = {
+      shape: 'circle',
+      color: { background: 'white' }
     };
-    //console.log('should be rendering the automaton');
+
+    groups.inicial = Object.assign({}, groups.normal);
+    groups.inicial.color = { background: '#add8e6' };
+
+    groups.final = Object.assign({}, groups.normal);
+    groups.final.borderWidth = 4;
+
+    groups['inicial-final'] = Object.assign({}, groups.inicial);
+    groups['inicial-final'] = Object.assign(groups['inicial-final'], groups.final);
+
+    const opts = {
+      groups,
+      edges: {
+        color: {
+          color: 'blue',
+          highlight: 'red'
+        }
+      }
+    };
     const automaton = new vis.Network(container, parse(data), opts);
-    //automaton.canvas.options.height = automaton.canvas.frame.clientHeight;
     automaton.setSize('100%', `${container.clientHeight * 0.98}px`);
   },
 
@@ -51,7 +60,7 @@ const AutomataViewer = React.createClass({
     return (
       <section className={cls(classes)} ref="container"/>
     );
-  },
+  }
 });
 
 module.exports = AutomataViewer;
