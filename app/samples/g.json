@@ -1,0 +1,87 @@
+{
+  "nome": "co-acessibilidade",
+  "estados": [
+    {
+      "id": 0,
+      "nome": "s0"
+    },
+    {
+      "id": 1,
+      "nome": "s1"
+    },
+    {
+      "id": 2,
+      "nome": "s2"
+    },
+    {
+      "id": 3,
+      "nome": "s3"
+    },
+    {
+      "id": 4,
+      "nome": "s4"
+    },
+    {
+      "id": 5,
+      "nome": "s5"
+    },
+    {
+      "id": 6,
+      "nome": "s6"
+    }
+  ],
+  "inicial": [0],
+  "final": [2],
+  "transicoes": [
+    {
+      "de": 0,
+      "para": 1,
+      "evento": "a"
+    },
+    {
+      "de": 0,
+      "para": 2,
+      "evento": "g"
+    },
+    {
+      "de": 1,
+      "para": 2,
+      "evento": "b"
+    },
+    {
+      "de": 1,
+      "para": 3,
+      "evento": "a"
+    },
+    {
+      "de": 1,
+      "para": 5,
+      "evento": "g"
+    },
+    {
+      "de": 6,
+      "para": 2,
+      "evento": "b"
+    },
+    {
+      "de": 6,
+      "para": 3,
+      "evento": "a"
+    },
+    {
+      "de": 3,
+      "para": 4,
+      "evento": "b"
+    },
+    {
+      "de": 4,
+      "para": 3,
+      "evento": "a"
+    },
+    {
+      "de": 4,
+      "para": 4,
+      "evento": "g"
+    }
+  ]
+}
