@@ -5,35 +5,47 @@
 }
 
 .form-area {
-  -border: 1px dashed black;
   height: 95vh;
   grid-column: 1 / 2;
   grid-row: 1 / span 3;
 }
 
+.form-area fieldset, .op-area fieldset {
+  margin: 0 1vw;
+}
+
 .op-area {
-  -border: 1px dashed black;
   grid-column: 2 / 3;
   grid-row: 1 / 2;
 }
 
-.aut {
-  -border: 1px dashed black;
+.viewer {
+  padding-top: 2px;
+  margin: 0 1vw;
   height: 100%;
-  width: 100%;
+  width: 95%;
   grid-column: 2 / 3;
   justify-self: stretch;
   align-self: stretch;
 }
 
-.aut.a {
+.viewer.active {
+  background-color: #cfc;
+  border: thin hidden #000;
+  box-sizing: border-box;
+  border-radius: 50vh;
+}
+
+.viewer canvas {
+  border: thick solid rgba(0,0,0,0.5);
+  box-sizing: border-box;
+  border-radius: 50vh;
+}
+
+.viewer.a {
   grid-row: 2 / 3;
 }
 
-.aut.b {
+.viewer.b {
   grid-row: 3 / 4;
-}
-
-.form-area form fieldset div {
-  display: list-item;
 }
