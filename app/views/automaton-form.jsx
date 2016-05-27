@@ -3,12 +3,12 @@ const classes = require('classnames');
 
 const AutomatonForm = React.createClass({
   getInitialState() {
-    return {form: '{}'};
+    return { form: '{}' };
   },
 
   componentWillReceiveProps(next) {
     this.setState({
-      form: next.data,
+      form: next.data
     });
   },
 
@@ -33,20 +33,26 @@ const AutomatonForm = React.createClass({
   },
 
   render() {
-    const forms = classes('form-area', 'pure-form', 'pure-form-stacked');
+    const forms = classes('form-area', 'pure-form', 'pure-form-aligned');
     const btns = classes('pure-button', 'pure-button-primary');
+    const group = classes('pure-control-group');
+    const control = classes('pure-controls');
 
     return (
       <form className={forms}>
         <fieldset>
           <legend>Informações do Autômato</legend>
-          <label for='json-area'>JSON</label>
-          <textarea id='json-area' ref='area' value={this.state.form} onChange={this.handleChange}/>
-          <input type='button' value='Atualizar' className={btns} onClick={this.onSubmit} />
+          <section className={group}>
+            <label for='json-area'>JSON</label>
+            <textarea id='json-area' ref='area' value={this.state.form} onChange={this.handleChange}/>
+          </section>
+          <section className={control}>
+            <input type='button' value='Atualizar' className={btns} onClick={this.onSubmit} />
+          </section>
         </fieldset>
       </form>
     );
-  },
+  }
 });
 
 module.exports = AutomatonForm;

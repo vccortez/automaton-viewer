@@ -7,52 +7,54 @@ const operacoes = require('../operations/');
 
 const App = React.createClass({
   getInitialState() {
-    return {automata: {}, form: {}};
+    return { a: {}, b: {}, form: {}, active: 'a' };
   },
 
-  onViewerFocus(automatonData) {},
-
-  formSubmit(automatonJSON) {
+  onViewerFocus(option) {
     this.setState({
-      automata: {
-        a: automatonJSON,
-        b: automatonJSON,
-      },
+      active: option,
+      form: JSON.stringify(this.state[option], null, 2)
     });
   },
 
+  formSubmit(automaton) {
+    const option = this.state.active;
+
+    this.setState({ [option]: automaton });
+  },
+
   formChange(form) {
-    this.setState({form});
+    this.setState({ form });
   },
 
   onOperationCall(operacao, option) {
-    const copy = Object.assign({}, this.state.automata[option]);
+    const copy = Object.assign({}, this.state[option]);
 
-    const novo = operacoes[operacao](copy);
+    const novo = operacoes[operacao].reduce((a, fn) => {
+      a = fn(a);
+      return a;
+    }, copy);
 
-    const other = option === 'a' ? 'b' : 'a';
     this.setState({
-      form: JSON.stringify(novo, null, 2),
-      automata: {
-        [option]: novo,
-        [other]: this.state.automata[other]
-      }
+      [option]: novo,
+      active: option,
+      form: JSON.stringify(this.state[option], null, 2)
     });
   },
 
   render() {
-    const a = this.state.automata.a || {};
-    const b = this.state.automata.b || {};
+    const a = this.state.a;
+    const b = this.state.b;
 
     return (
       <article className='container'>
         <AutomatonForm data={this.state.form} submit={this.formSubmit} change={this.formChange}/>
         <OperationForm data={operacoes} action={this.onOperationCall}/>
-        <AutomataViewer data={a} cname='a'/>
-        <AutomataViewer data={b} cname='b'/>
+        <AutomataViewer data={a} active={(this.state.active == 'a')} cname='a' action={this.onViewerFocus}/>
+        <AutomataViewer data={b} active={(this.state.active == 'b')} cname='b' action={this.onViewerFocus}/>
       </article>
     );
-  },
+  }
 });
 
 module.exports = App;
