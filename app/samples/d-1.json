@@ -1,0 +1,60 @@
+{
+  "nome": "G1",
+  "estados": [
+    {
+      "id": 1,
+      "nome": "x"
+    },
+    {
+      "id": 2,
+      "nome": "z"
+    },
+    {
+      "id": 3,
+      "nome": "z"
+    }
+  ],
+  "inicial": [
+    1
+  ],
+  "final": [
+    2, 1
+  ],
+  "transicoes": [
+    {
+      "de": 1,
+      "para": 2,
+      "evento": "g"
+    },
+    {
+      "de": 1,
+      "para": 1,
+      "evento": "a"
+    },
+    {
+      "de": 2,
+      "para": 2,
+      "evento": "b"
+    },
+    {
+      "de": 2,
+      "para": 3,
+      "evento": "a"
+    },
+    {
+      "de": 2,
+      "para": 3,
+      "evento": "g"
+    },
+    {
+      "de": 3,
+      "para": 1,
+      "evento": "a"
+    },
+    {
+      "de": 3,
+      "para": 3,
+      "evento": "b"
+    }
+  ]
+}

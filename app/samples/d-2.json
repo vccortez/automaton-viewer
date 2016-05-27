@@ -1,0 +1,41 @@
+{
+  "nome": "G2",
+  "estados": [
+    {
+      "id": 0,
+      "nome": "0"
+    },
+    {
+      "id": 1,
+      "nome": "1"
+    }
+  ],
+  "inicial": [
+    0
+  ],
+  "final": [
+    1
+  ],
+  "transicoes": [
+    {
+      "de": 0,
+      "para": 1,
+      "evento": "a"
+    },
+    {
+      "de": 0,
+      "para": 0,
+      "evento": "b"
+    },
+    {
+      "de": 1,
+      "para": 0,
+      "evento": "b"
+    },
+    {
+      "de": 1,
+      "para": 1,
+      "evento": "a"
+    }
+  ]
+}

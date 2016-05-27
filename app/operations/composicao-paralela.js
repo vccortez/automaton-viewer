@@ -64,9 +64,8 @@ function composicaoParalela(a1, a2) {
             if (tt.evento == t2.evento && tt.de == novo_estado.id.split(',')[0]) {
               if (novas_transicoes.every(t => {
                 return (
-                  novo_estado.id != t.id && `${tt.para},${t2.para}` != t.para && t2.evento != t.evento
-                );
-              })) {
+                  novo_estado.id != t.de && `${tt.para},${t2.para}` != t.para && t2.evento != t.evento);
+                })) {
                 novas_transicoes.push({
                   de: novo_estado.id,
                   para: `${tt.para},${t2.para}`,
@@ -78,9 +77,8 @@ function composicaoParalela(a1, a2) {
         } else {
           if (novas_transicoes.every(t => {
             return (
-              novo_estado.id != t.id && `${novo_estado.id.split(',')[0]},${t2.para}` != t.para && t2.evento != t.evento
-                          );
-          })) {
+              novo_estado.id != t.de && `${novo_estado.id.split(',')[0]},${t2.para}` != t.para && t2.evento != t.evento );
+            })) {
             novas_transicoes.push({
               de: novo_estado.id,
               para: `${novo_estado.id.split(',')[0]},${t2.para}`,
