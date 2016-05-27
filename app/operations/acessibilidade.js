@@ -1,5 +1,4 @@
 function acessibilidade(automato) {
-
   const estadosIn = [];
   const transicoesMo = [];
   let temTransicoes = false;
@@ -30,6 +29,7 @@ function acessibilidade(automato) {
   automato.transicoes = transicoes;
 
   if (estadosIn.length == 0 && transicoesMo.length == 0) {
+    automato.nome += '-ac';
     return automato;
   } else {
     return acessibilidade(automato);

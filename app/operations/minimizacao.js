@@ -103,7 +103,7 @@ function minimizacao(automato) {
   }, new Set());
   inicial = [...inicial];
   final = [...final];
-  const nome = automato.nome;
+  const nome = automato.nome + '-mi';
 
   return {nome, estados, inicial, final, transicoes};
 }

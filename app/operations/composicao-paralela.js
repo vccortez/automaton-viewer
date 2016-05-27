@@ -95,7 +95,7 @@ function composicaoParalela(a1, a2) {
     transicoes: novas_transicoes,
     inicial: novos_iniciais,
     final: novos_finais,
-    nome: 'teste'
+    nome: a1.nome + '+' + a2.nome
   };
 }
 

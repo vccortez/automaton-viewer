@@ -40,6 +40,7 @@ function funcaoTotal(automato) {
   }
 
   automato.transicoes = automato.transicoes.concat(total);
+  automato.nome += '-ft';
 
   return automato;
 }

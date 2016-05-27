@@ -29,11 +29,11 @@ function produto(a1, a2) {
   }, new Set());
 
   const eventos = new Set();
-  for (let t of a2.transicoes){
-    if(eventos_a.has(t.evento))
+  for (let t of a2.transicoes) {
+    if (eventos_a.has(t.evento))
       eventos.add(t.evento);
   }
-  
+
   const novas_transicoes = [];
 
   for (let novo_estado of novos_estados) {
@@ -56,8 +56,8 @@ function produto(a1, a2) {
         for (let tt of a1.transicoes) {
           if (tt.evento == t2.evento && tt.de == novo_estado.id.split(',')[0]) {
             if (novas_transicoes.every(t => {
-              return (
-                novo_estado.id != t.de && `${tt.para},${t2.para}` != t.para && t2.evento != t.evento);
+                return (
+                  novo_estado.id != t.de && `${tt.para},${t2.para}` != t.para && t2.evento != t.evento);
               })) {
               novas_transicoes.push({
                 de: novo_estado.id,
@@ -76,7 +76,7 @@ function produto(a1, a2) {
     transicoes: novas_transicoes,
     inicial: novos_iniciais,
     final: novos_finais,
-    nome: 'teste'
+    nome: a1.nome + '*' + a2.nome
   };
 }
 
