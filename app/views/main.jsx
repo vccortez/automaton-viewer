@@ -39,7 +39,10 @@ const App = React.createClass({
     const copy = Object.assign({}, this.state[option]);
 
     const novo = operacoes[operacao].reduce((a, fn) => {
-      a = fn(a);
+      if (fn.length == 2)
+        a = fn(a, this.state.b);
+      else
+        a = fn(a);
       return a;
     }, copy);
 
