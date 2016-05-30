@@ -5,29 +5,37 @@ const AutomataViewer = require('./automaton-viewer.jsx');
 
 const operacoes = require('../operations/');
 
+const empty = {
+  nome: '',
+  estados: [],
+  inicial: [],
+  final: [],
+  transicoes: []
+};
+
 const App = React.createClass({
   getInitialState() {
-    return { a: {}, b: {}, form: {}, active: 'a' };
+    return { a: empty, b: empty, form: JSON.stringify(empty), active: 'a' };
   },
 
   onViewerFocus(option) {
     this.setState({
       active: option,
-      form: JSON.stringify(this.state[option], null, 2)
+      form: JSON.stringify(this.state[option])
     });
   },
 
-  formSubmit(automaton) {
+  atualizarAutomato() {
     const option = this.state.active;
-
-    this.setState({ [option]: automaton });
+    this.setState({ [option]: JSON.parse(this.state.form) });
   },
 
-  formChange(form) {
+  atualizarForm(form) {
     this.setState({ form });
   },
 
-  onOperationCall(operacao, option) {
+  onOperationCall(operacao) {
+    const option = this.state.active;
     const copy = Object.assign({}, this.state[option]);
 
     const novo = operacoes[operacao].reduce((a, fn) => {
@@ -37,8 +45,7 @@ const App = React.createClass({
 
     this.setState({
       [option]: novo,
-      active: option,
-      form: JSON.stringify(this.state[option], null, 2)
+      form: JSON.stringify(novo)
     });
   },
 
@@ -48,10 +55,28 @@ const App = React.createClass({
 
     return (
       <article className='container'>
-        <AutomatonForm data={this.state.form} submit={this.formSubmit} change={this.formChange}/>
-        <OperationForm data={operacoes} action={this.onOperationCall}/>
-        <AutomataViewer data={a} active={(this.state.active == 'a')} cname='a' action={this.onViewerFocus}/>
-        <AutomataViewer data={b} active={(this.state.active == 'b')} cname='b' action={this.onViewerFocus}/>
+        <AutomatonForm
+          data={this.state.form}
+          update={this.atualizarForm}
+          confirm={this.atualizarAutomato}/>
+
+        <OperationForm
+          data={operacoes}
+          action={this.onOperationCall}/>
+
+        <section className='viewers'>
+          <AutomataViewer
+            data={a}
+            active={(this.state.active == 'a')}
+            cname='a'
+            action={this.onViewerFocus}/>
+
+          <AutomataViewer
+            data={b}
+            active={(this.state.active == 'b')}
+            cname='b'
+            action={this.onViewerFocus}/>
+        </section>
       </article>
     );
   }
