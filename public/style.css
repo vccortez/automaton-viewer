@@ -89,3 +89,32 @@ fieldset legend {
 .warn-button {
   border-radius: 20px;
 }
+
+.nome-grid {
+  display: grid;
+  grid: 100% / 2fr 1fr;
+}
+
+.nome-grid input {
+  grid-column: 1 / 2;
+}
+
+.nome-grid .inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.nome-grid .labelfile {
+  grid-column: 2;
+  width: auto;
+  align-self: center;
+  margin: 0 auto;
+  color: white;
+  border-radius: 4px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  background: rgb(66, 184, 221);
+}

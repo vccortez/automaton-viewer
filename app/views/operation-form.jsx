@@ -22,7 +22,7 @@ const OperationForm = React.createClass({
         <fieldset>
           <legend>Operações</legend>
 
-          <label for='op-list'>Operação</label>
+          <label for='op-list'>Nome</label>
           <select id='op-list' ref='ops'>{options}</select>
 
           <input type='button' value='Aplicar' className={btns} onClick={this.handleSubmit}/>

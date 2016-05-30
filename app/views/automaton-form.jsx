@@ -72,6 +72,28 @@ const AutomatonForm = React.createClass({
     this.props.update(JSON.stringify(json));
   },
 
+  onFile(e) {
+    const fileList = e.target.files;
+
+    const file = fileList[0];
+
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      let json;
+      try {
+        json = JSON.parse(e.target.result);
+      } catch (e) {
+        console.log(e);
+        return;
+      }
+
+      this.props.update(JSON.stringify(json));
+    };
+
+    reader.readAsText(file);
+  },
+
   render() {
     const automato = JSON.parse(this.props.data);
 
@@ -99,6 +121,8 @@ const AutomatonForm = React.createClass({
     const btns = classes('pure-button', 'pure-button-primary');
     const group = classes('pure-control-group');
     const control = classes('pure-controls');
+    const filereader = classes('inputfile');
+    const filelabel = classes('labelfile', 'pure-button');
 
     return (
       <form className={form}>
@@ -106,9 +130,13 @@ const AutomatonForm = React.createClass({
 
           <legend>Autômato</legend>
 
-          <section className={group}>
+          <section className={group + ' nome-grid'}>
             <label for='nome'>Nome</label>
             <input type='text' placeholder='Autômato' id='nome' required autofocus value={nome} onChange={this.atualizarNome} ref='nome'/>
+            <label for='file' className={filelabel}>
+              <i className='fa fa-file-text-o'/> JSON
+              <input type='file' ref='file' name='file' id='file' onChange={this.onFile} className={filereader}/>
+            </label>
           </section>
 
           <section className={group}>
