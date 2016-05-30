@@ -2,50 +2,90 @@
   display: grid;
   grid-template-columns: 2fr 3fr;
   grid-template-rows: 1fr 3fr 3fr;
+  max-height: 100vh;
+  max-width: 100vw;
 }
 
 .form-area {
-  height: 95vh;
   grid-column: 1 / 2;
   grid-row: 1 / span 3;
+  background: aliceblue;
+  border: thin none;
+  border-radius: 10px;
+  margin: 10px;
 }
 
-.form-area fieldset, .op-area fieldset {
-  margin: 0 1vw;
+.form-area fieldset,
+.op-area fieldset {
+  padding: 10px;
+}
+
+fieldset legend {
+  font-weight: bold;
 }
 
 .op-area {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
+  background: aliceblue;
+  border: thin none;
+  border-radius: 10px;
+  margin: 10px;
 }
 
-.viewer {
-  padding-top: 2px;
-  margin: 0 1vw;
-  height: 100%;
-  width: 95%;
+.viewers {
   grid-column: 2 / 3;
+  grid-row: 2 / span 3;
+  display: grid;
+  grid: 1fr 1fr / 100%;
+  background-color: aliceblue;
+  border-radius: 10px;
   justify-self: stretch;
   align-self: stretch;
+  margin: 10px;
+}
+
+.viewers .viewer {
+  padding-top: 2px;
+  margin: 10px;
+}
+
+.inline-btn {
+  display: inline-table;
 }
 
 .viewer.active {
   background-color: #cfc;
   border: thin hidden #000;
   box-sizing: border-box;
-  border-radius: 50vh;
+  border-radius: 20vh;
 }
 
 .viewer canvas {
-  border: thick solid rgba(0,0,0,0.5);
+  border: thick solid rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
-  border-radius: 50vh;
+  border-radius: 20vh;
 }
 
-.viewer.a {
-  grid-row: 2 / 3;
+.table-center {
+  margin: 0 auto;
+  overflow: auto;
+  display: block;
+  max-height: 27vh;
+  width: 100%;
 }
 
-.viewer.b {
-  grid-row: 3 / 4;
+.table-center thead,
+.table-center tbody {
+  width: inherit;
+  display: table;
+}
+
+.table-center td,
+.table-center th {
+  text-align: center;
+}
+
+.warn-button {
+  border-radius: 20px;
 }
