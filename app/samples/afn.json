@@ -1,0 +1,60 @@
+{
+  "nome": "afn",
+  "estados": [
+    {
+      "id": 0,
+      "nome": "s0"
+    },
+    {
+      "id": 1,
+      "nome": "s1"
+    },
+    {
+      "id": 2,
+      "nome": "s2"
+    },
+    {
+      "id": 3,
+      "nome": "s3"
+    }
+  ],
+  "inicial": [0],
+  "final": [0],
+  "transicoes": [
+    {
+      "de": 0,
+      "para": 1,
+      "evento": "a"
+    },
+    {
+      "de": 1,
+      "para": 0,
+      "evento": "b"
+    },
+    {
+      "de": 1,
+      "para": 1,
+      "evento": "b"
+    },
+    {
+      "de": 1,
+      "para": 2,
+      "evento": "§"
+    },
+    {
+      "de": 2,
+      "para": 0,
+      "evento": "a"
+    },
+    {
+      "de": 2,
+      "para": 3,
+      "evento": "§"
+    },
+    {
+      "de": 3,
+      "para": 0,
+      "evento": "b"
+    }
+  ]
+}

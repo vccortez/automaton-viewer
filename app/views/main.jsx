@@ -15,7 +15,7 @@ const empty = {
 
 const App = React.createClass({
   getInitialState() {
-    return { a: empty, b: empty, form: JSON.stringify(empty), active: 'a' };
+    return { a: require('../samples/afn.json'), b: empty, form: JSON.stringify(empty), active: 'a' };
   },
 
   onViewerFocus(option) {

@@ -9,10 +9,7 @@ const fnto = require('./funcao-total.js');
 const mini = require('./minimizacao.js');
 const copa = require('./composicao-paralela.js');
 const prod = require('./produto.js');
-const afnd = (x) => {
-  console.log('Conversão não implementada!');
-  return x;
-};
+const afnd = require('./afn-to-afd.js');
 
 module.exports = {
   Acessibilidade: [aces],
