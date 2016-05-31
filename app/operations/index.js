@@ -17,7 +17,7 @@ module.exports = {
   Trim: [aces, coac],
   'Minimização': [afnd, aces, fnto, mini],
   'Função Total': [fnto],
-  'Composição Paralela': [copa, aces],
-  Produto: [prod, aces],
+  'Composição Paralela': [copa],
+  Produto: [prod],
   'Conversão de AFN para AFD': [afnd]
 };

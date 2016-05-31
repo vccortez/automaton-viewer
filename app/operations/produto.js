@@ -3,15 +3,23 @@ function produto(a1, a2) {
   const novos_iniciais = [];
   const novos_finais = [];
 
+  const ids = new Map();
+  const map = new Map();
+
   for (let estado_a of a1.estados) {
     for (let estado_b of a2.estados) {
+      let valor = [estado_a.id, estado_b.id];
+
       let novo_estado = {
-        id: `${estado_a.id},${estado_b.id}`,
-        nome: estado_a.nome + estado_b.nome
+        id: novos_estados.length,
+        nome: valor.join()
       };
 
-      novos_estados.push(novo_estado);
+      ids.set(novo_estado.id, valor);
+      map.set(valor.join(), novo_estado.id);
 
+      novos_estados.push(novo_estado);
+      
       if (a1.inicial.includes(estado_a.id) && a2.inicial.includes(estado_b.id)) {
         novos_iniciais.push(novo_estado.id);
       }
@@ -37,13 +45,15 @@ function produto(a1, a2) {
   const novas_transicoes = [];
 
   for (let novo_estado of novos_estados) {
+    let oldId = ids.get(novo_estado.id);
+
     for (let t1 of a1.transicoes) {
-      if (t1.de == novo_estado.id.split(',')[0] && eventos.has(t1.evento)) {
+      if (t1.de == oldId[0] && eventos.has(t1.evento)) {
         for (let tt of a2.transicoes) {
-          if (tt.evento == t1.evento && tt.de == novo_estado.id.split(',')[1]) {
+          if (tt.evento == t1.evento && tt.de == oldId[1]) {
             novas_transicoes.push({
               de: novo_estado.id,
-              para: `${t1.para},${tt.para}`,
+              para: map.get([t1.para, tt.para].join()),
               evento: t1.evento
             });
           }
@@ -52,16 +62,16 @@ function produto(a1, a2) {
     }
 
     for (let t2 of a2.transicoes) {
-      if (t2.de == novo_estado.id.split(',')[1] && eventos.has(t2.evento)) {
+      if (t2.de == oldId[1] && eventos.has(t2.evento)) {
         for (let tt of a1.transicoes) {
-          if (tt.evento == t2.evento && tt.de == novo_estado.id.split(',')[0]) {
+          if (tt.evento == t2.evento && tt.de == oldId[0]) {
             if (novas_transicoes.every(t => {
                 return (
-                  novo_estado.id != t.de && `${tt.para},${t2.para}` != t.para && t2.evento != t.evento);
+                  novo_estado.id != t.de && map.get([tt.para, t2.para].join()) != t.para && t2.evento != t.evento);
               })) {
               novas_transicoes.push({
                 de: novo_estado.id,
-                para: `${tt.para},${t2.para}`,
+                para: map.get([tt.para, t2.para].join()),
                 evento: t2.evento
               });
             }
