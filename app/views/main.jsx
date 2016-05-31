@@ -36,11 +36,14 @@ const App = React.createClass({
 
   onOperationCall(operacao) {
     const option = this.state.active;
+    const secondary = (option == 'a') ? 'b' : 'a';
+
     const copy = Object.assign({}, this.state[option]);
+    const other = Object.assign({}, this.state[secondary]);
 
     const novo = operacoes[operacao].reduce((a, fn) => {
       if (fn.length == 2)
-        a = fn(a, this.state.b);
+        a = fn(a, other);
       else
         a = fn(a);
       return a;

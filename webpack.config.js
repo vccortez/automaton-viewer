@@ -3,7 +3,8 @@ const webpack = require('webpack');
 
 const PATHS = {
   app: path.resolve(__dirname, 'app'),
-  out: path.resolve(__dirname, 'public')
+  pub: path.resolve(__dirname, 'public'),
+  out: path.resolve(__dirname, 'build')
 };
 
 module.exports = {
@@ -31,7 +32,7 @@ module.exports = {
   },
   devtool: '#cheap-module-source-map',
   devServer: {
-    contentBase: PATHS.out
+    contentBase: PATHS.pub
   },
   plugins: [
     new webpack.DefinePlugin({
