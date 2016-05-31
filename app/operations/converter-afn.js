@@ -11,11 +11,8 @@ function converterAFN(automato) {
   const startNFA = automato.estados.filter(
     e => automato.inicial.includes(e.id)
   );
-  console.log('Inicial do AFN:', startNFA);
 
   const inicial = closure(startNFA, automato, epsilon);
-
-  console.log('Inicial do AFD:', inicial);
 
   const novos = new Set([inicial]);
 
@@ -58,8 +55,6 @@ function converterAFN(automato) {
       }
     }
   }
-
-  console.log(DFA.table);
 
   const ids = new Map();
   const finais = new Set();
@@ -104,7 +99,6 @@ function converterAFN(automato) {
   DFA.final = [...finais];
   delete DFA.table;
 
-  console.log(JSON.stringify(DFA, null, 2));
   return DFA;
 }
 
