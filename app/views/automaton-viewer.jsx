@@ -44,17 +44,34 @@ const AutomataViewer = React.createClass({
       color: { background: 'white' }
     };
 
-    groups.inicial = Object.assign({}, groups.normal);
-    groups.inicial.color = { background: '#add8e6' };
+    groups.inicial = {
+      shape: 'circle',
+      color: { background: 'lightblue' }
+    };
 
-    groups.final = Object.assign({}, groups.normal);
-    groups.final.borderWidth = 4;
+    groups.final = {
+      shape: 'circle',
+      color: { background: 'white' },
+      borderWidth: 4
+    };
 
-    groups['inicial-final'] = Object.assign({}, groups.inicial);
-    groups['inicial-final'] = Object.assign(groups['inicial-final'], groups.final);
+
+    groups['inicial-final'] = {
+      shape: 'circle',
+      color: { background: 'lightblue' },
+      borderWidth: 4
+    };
 
     const opts = {
       groups,
+      nodes: {
+        color: {
+          highlight: {
+            border: 'red',
+            background: 'pink'
+          }
+        }
+      },
       edges: {
         color: {
           color: 'blue',

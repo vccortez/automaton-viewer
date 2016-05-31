@@ -55,6 +55,12 @@ function geraEstadoAfd(automato, set_est, ev, vazio) {
 function unificaEstados(set_est) {
   const est_unificado = { id: '', nome: '' };
 
+  set_est = set_est.sort((a, b) => {
+    if (a.id > b.id) return 1;
+    if (a.id < b.id) return -1;
+    return 0;
+  });
+
   for (let es of set_est) {
     est_unificado.id = est_unificado.id + es.id;
     est_unificado.nome = est_unificado.nome + es.nome;
@@ -95,13 +101,13 @@ function afntoAfd(automato) {
       esAux = geraEstadoAfd(automato, esAux, simb, TRANS_VAZIA);
       // TODO: comparar conjuntos de estados
 
-      if (!([...esNovos].some(set => {
+      if (esAux.size > 0 && !([...esNovos].some(set => {
         let ids = new Set([...esAux].map(x => x.id));
         let cond = (set.length == ids.size && set.every(s => ids.has(s.id)));
         return (cond);
       }))) {
         esNovos.add([...esAux]);
-        pilha.push(esAux); //empilha para depois ver se ele gera novos estados para o AFD
+        pilha.push([...esAux]); //empilha para depois ver se ele gera novos estados para o AFD
       }
     }
   } while (pilha.length > 0);
@@ -122,7 +128,8 @@ function afntoAfd(automato) {
 
     //montando as transições para o "esNovo"
     for (let simb of simbolos) {
-      let novosPara = move(automato, novoDe, simb);
+      let novosPara = setMove(automato, esNovo, simb);
+      novosPara = setClosure(automato, novosPara, TRANS_VAZIA);
       if (novosPara.length != 0) {
         let novoPara = unificaEstados(novosPara);
         //a condição evita transições não definidas

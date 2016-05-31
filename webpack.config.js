@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 const PATHS = {
   app: path.resolve(__dirname, 'app'),
@@ -28,8 +29,15 @@ module.exports = {
       include: PATHS.app
     }]
   },
-  devtool: '#inline-source-map',
+  devtool: '#cheap-module-source-map',
   devServer: {
     contentBase: PATHS.out
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    })
+  ]
 };

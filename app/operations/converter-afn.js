@@ -11,13 +11,19 @@ function converterAFN(automato) {
   const startNFA = automato.estados.filter(
     e => automato.inicial.includes(e.id)
   );
+  console.log('Inicial do AFN:', startNFA);
 
   const inicial = closure(startNFA, automato, epsilon);
+
+  console.log('Inicial do AFD:', inicial);
 
   const novos = new Set([inicial]);
 
   while (novos.size > 0) {
     for (let novo of novos) {
+      // TODO: closure antes?
+      // novo = closure(novo, automato, epsilon);
+
       if (exists(DFA.table, novo)) {
         continue;
       }
@@ -25,7 +31,12 @@ function converterAFN(automato) {
       const resultados = new Map();
 
       for (let evento of eventos) {
-        resultados.set(evento, move(novo, automato, evento, epsilon));
+        let resultado = move(novo, automato, evento, epsilon);
+        if (resultado.length == 0) {
+          resultado = null;
+        }
+
+        resultados.set(evento, resultado);
       }
 
       DFA.table.set(novo, resultados);
@@ -35,6 +46,10 @@ function converterAFN(automato) {
 
     for (let [state, results] of DFA.table) {
       for (let [evento, result] of results) {
+        if (result == void(0)) {
+          continue;
+        }
+
         if (!exists(DFA.table, result) && result.length > 0) {
           if (!exists(novos, result)) {
             novos.add(result);
@@ -43,6 +58,8 @@ function converterAFN(automato) {
       }
     }
   }
+
+  console.log(DFA.table);
 
   const ids = new Map();
   const finais = new Set();
@@ -67,6 +84,10 @@ function converterAFN(automato) {
     let nome = `{${((kv[0].map(e => e.nome)).sort()).join()}}`;
     let de = ids.get(nome);
     kv[1].forEach((v, k) => {
+      if (v == void(0)) {
+        return;
+      }
+
       let pnome = `{${((v.map(e => e.nome)).sort()).join()}}`;
       let para = ids.get(pnome);
       if (para != void(0))
@@ -83,6 +104,7 @@ function converterAFN(automato) {
   DFA.final = [...finais];
   delete DFA.table;
 
+  console.log(JSON.stringify(DFA, null, 2));
   return DFA;
 }
 
@@ -94,7 +116,12 @@ function closure(entrada, automato, vazio) {
     const novos = [];
 
     for (let es of saida) {
-      const transicoes = automato.transicoes.filter(t => t.de == es.id);
+      let transicoes = automato.transicoes.filter(t => t.de == es.id);
+      transicoes = transicoes.map(t => {
+        t.de = parseInt(t.de);
+        t.para = parseInt(t.para);
+        return t;
+      });
 
       for (let tr of transicoes) {
         if (tr.evento == vazio) {
@@ -121,19 +148,27 @@ function move(entrada, automato, evento, vazio) {
   const saida = [];
 
   for (let es of entrada) {
-    const transicoes = automato.transicoes.filter(t => t.de == es.id);
+    let transicoes = automato.transicoes.filter(t => t.de == es.id);
+    transicoes = transicoes.map(t => {
+      t.de = parseInt(t.de);
+      t.para = parseInt(t.para);
+      return t;
+    });
 
     for (let tr of transicoes) {
-      let e = estados.get(tr.para);
+      if (tr.evento == evento) {
+        let e = estados.get(tr.para);
 
-      if (tr.evento == evento && !saida.includes(e)) {
-        saida.push(estados.get(tr.para));
+        if (!saida.includes(e)) {
+          saida.push(e);
+        }
       }
     }
   }
 
-  if (saida.length == 0)
+  if (saida.length == 0) {
     return [];
+  }
 
   return closure(saida, automato, vazio);
 }

@@ -1,0 +1,46 @@
+{
+  "nome": "jflap-afd",
+  "estados": [
+    {
+      "id": 0,
+      "nome": "{q0,q1}"
+    },
+    {
+      "id": 1,
+      "nome": "{q2}"
+    },
+    {
+      "id": 2,
+      "nome": "{q0,q1,q2}"
+    }
+  ],
+  "transicoes": [
+    {
+      "de": 0,
+      "para": 1,
+      "evento": "a"
+    },
+    {
+      "de": 1,
+      "para": 2,
+      "evento": "b"
+    },
+    {
+      "de": 2,
+      "para": 1,
+      "evento": "a"
+    },
+    {
+      "de": 2,
+      "para": 2,
+      "evento": "b"
+    }
+  ],
+  "inicial": [
+    0
+  ],
+  "final": [
+    0,
+    2
+  ]
+}

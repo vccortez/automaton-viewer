@@ -4,7 +4,8 @@
   "description": "implementacao de um visualizador de automatos",
   "main": "app/index.js",
   "scripts": {
-    "test": "webpack-dev-server --progress --colors"
+    "test": "webpack-dev-server --progress --colors",
+    "build": "webpack --progress -p"
   },
   "keywords": [
     "automato"

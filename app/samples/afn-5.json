@@ -1,0 +1,45 @@
+{
+  "nome": "afn012",
+  "estados": [
+    {
+      "id": 0,
+      "nome": "q0"
+    },
+    {
+      "id": 1,
+      "nome": "q1"
+    },
+    {
+      "id": 2,
+      "nome": "q2"
+    }
+  ],
+  "inicial": [
+    0
+  ],
+  "final": [
+    0
+  ],
+  "transicoes": [
+    {
+      "de": 0,
+      "para": 1,
+      "evento": "a"
+    },
+    {
+      "de": 1,
+      "para": 0,
+      "evento": "b"
+    },
+    {
+      "de": 1,
+      "para": 2,
+      "evento": "b"
+    },
+    {
+      "de": 2,
+      "para": 0,
+      "evento": "a"
+    }
+  ]
+}
