@@ -43,8 +43,8 @@ const TransitionList = React.createClass({
   },
 
   adicionar() {
-    const de = this.refs.mEstado.value;
-    const para = this.refs.mDestino.value;
+    const de = parseInt(this.refs.mEstado.value);
+    const para = parseInt(this.refs.mDestino.value);
     const evento = this.refs.mEvento.value;
     this.props.add({ de, para, evento });
     this.closeModal();
