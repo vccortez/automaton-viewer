@@ -1,0 +1,51 @@
+{
+  "nome": "afn-3",
+  "estados": [
+    {
+      "id": 0,
+      "nome": "q0"
+    },
+    {
+      "id": 1,
+      "nome": "q1"
+    },
+    {
+      "id": 2,
+      "nome": "q2"
+    }
+  ],
+  "inicial": [0],
+  "final": [2],
+  "transicoes": [
+    {
+      "de": 0,
+      "para": 2,
+      "evento": "0"
+    },
+    {
+      "de": 1,
+      "para": 0,
+      "evento": "1"
+    },
+    {
+      "de": 1,
+      "para": 2,
+      "evento": "1"
+    },
+    {
+      "de": 2,
+      "para": 1,
+      "evento": "0"
+    },
+    {
+      "de": 2,
+      "para": 0,
+      "evento": "0"
+    },
+    {
+      "de": 2,
+      "para": 0,
+      "evento": "1"
+    }
+  ]
+}

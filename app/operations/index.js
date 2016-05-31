@@ -9,7 +9,7 @@ const fnto = require('./funcao-total.js');
 const mini = require('./minimizacao.js');
 const copa = require('./composicao-paralela.js');
 const prod = require('./produto.js');
-const afnd = require('./afn-to-afd.js');
+const afnd = require('./converter-afn.js');
 
 module.exports = {
   Acessibilidade: [aces],
@@ -19,5 +19,5 @@ module.exports = {
   'Função Total': [fnto],
   'Composição Paralela': [copa, aces],
   Produto: [prod, aces],
-  'Conversão de AFD para AFN': [afnd]
+  'Conversão de AFN para AFD': [afnd]
 };

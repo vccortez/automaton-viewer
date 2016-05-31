@@ -8,6 +8,16 @@ const AutomatonForm = React.createClass({
     this.props.confirm();
   },
 
+  clear() {
+    const json = JSON.parse(this.props.data);
+    json.transicoes = [];
+    json.estados = [];
+    json.inicial = [];
+    json.final = [];
+    json.nome = '';
+    this.props.update(JSON.stringify(json));
+  },
+
   atualizarNome() {
     const json = JSON.parse(this.props.data);
     json.nome = this.refs.nome.value;
@@ -46,6 +56,8 @@ const AutomatonForm = React.createClass({
 
     json.estados = json.estados.filter(e => e.id != id);
     json.transicoes = json.transicoes.filter(t => t.de != id && t.para != id);
+    json.inicial = json.inicial.filter(i => i != id);
+    json.final = json.final.filter(i => i != id);
 
     this.props.update(JSON.stringify(json));
   },
@@ -128,7 +140,7 @@ const AutomatonForm = React.createClass({
       <form className={form}>
         <fieldset>
 
-          <legend>Autômato</legend>
+          <legend>Autômato <a onClick={this.clear} className='clear-link'>Limpar</a></legend>
 
           <section className={group + ' nome-grid'}>
             <label for='nome'>Nome</label>

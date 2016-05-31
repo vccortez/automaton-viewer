@@ -1,0 +1,158 @@
+function converterAFN(automato) {
+  const epsilon = '§';
+  const DFA = { table: new Map() };
+
+  const eventos = automato.transicoes.reduce((set, t) => {
+    set.add(t.evento);
+    return set;
+  }, new Set());
+  eventos.delete(epsilon);
+
+  const startNFA = automato.estados.filter(
+    e => automato.inicial.includes(e.id)
+  );
+
+  const inicial = closure(startNFA, automato, epsilon);
+
+  const novos = new Set([inicial]);
+
+  while (novos.size > 0) {
+    for (let novo of novos) {
+      if (exists(DFA.table, novo)) {
+        continue;
+      }
+
+      const resultados = new Map();
+
+      for (let evento of eventos) {
+        resultados.set(evento, move(novo, automato, evento, epsilon));
+      }
+
+      DFA.table.set(novo, resultados);
+    }
+
+    novos.clear();
+
+    for (let [state, results] of DFA.table) {
+      for (let [evento, result] of results) {
+        if (!exists(DFA.table, result) && result.length > 0) {
+          if (!exists(novos, result)) {
+            novos.add(result);
+          }
+        }
+      }
+    }
+  }
+
+  const ids = new Map();
+  const finais = new Set();
+  const table = [...DFA.table];
+  DFA.nome = `${automato.nome}-afd`;
+
+  DFA.estados = table.map((kv, i) => {
+    let names = (kv[0].map(e => e.nome)).sort();
+    let novoEstado = {
+      id: i,
+      nome: `{${names.join()}}`
+    };
+    ids.set(novoEstado.nome, novoEstado.id);
+    if (kv[0].some(e => automato.final.includes(e.id))) {
+      finais.add(novoEstado.id);
+    }
+
+    return novoEstado;
+  });
+
+  DFA.transicoes = table.reduce((arr, kv, i) => {
+    let nome = `{${((kv[0].map(e => e.nome)).sort()).join()}}`;
+    let de = ids.get(nome);
+    kv[1].forEach((v, k) => {
+      let pnome = `{${((v.map(e => e.nome)).sort()).join()}}`;
+      let para = ids.get(pnome);
+      if (para != void(0))
+        arr.push({
+          de: de,
+          para: para,
+          evento: k
+        });
+    });
+    return arr;
+  }, []);
+
+  DFA.inicial = [ids.get(`{${((inicial.map(e => e.nome)).sort()).join()}}`)];
+  DFA.final = [...finais];
+  delete DFA.table;
+
+  return DFA;
+}
+
+function closure(entrada, automato, vazio) {
+  const estados = mapStates(automato);
+  let saida = [...entrada];
+
+  while (true) {
+    const novos = [];
+
+    for (let es of saida) {
+      const transicoes = automato.transicoes.filter(t => t.de == es.id);
+
+      for (let tr of transicoes) {
+        if (tr.evento == vazio) {
+          let e = estados.get(tr.para);
+
+          if (!saida.includes(e)) {
+            novos.push(e);
+          }
+        }
+      }
+    }
+
+    if (novos.length == 0)
+      break;
+
+    saida = saida.concat(novos);
+  }
+
+  return saida;
+}
+
+function move(entrada, automato, evento, vazio) {
+  const estados = mapStates(automato);
+  const saida = [];
+
+  for (let es of entrada) {
+    const transicoes = automato.transicoes.filter(t => t.de == es.id);
+
+    for (let tr of transicoes) {
+      let e = estados.get(tr.para);
+
+      if (tr.evento == evento && !saida.includes(e)) {
+        saida.push(estados.get(tr.para));
+      }
+    }
+  }
+
+  if (saida.length == 0)
+    return [];
+
+  return closure(saida, automato, vazio);
+}
+
+function mapStates(automato) {
+  return automato.estados.reduce((map, estado) => {
+    map.set(estado.id, estado);
+    return map;
+  }, new Map());
+}
+
+function exists(map, key) {
+  for (let k of map.keys()) {
+    if (k.length == key.length && k.every(el => key.includes(el))) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+module.exports = converterAFN;
