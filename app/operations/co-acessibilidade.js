@@ -18,7 +18,9 @@ function coAcessibilidade(automato) {
 
   for (let coId of estadosCo) {
     let e = automato.estados.find(e => e.id == coId);
-    estados.push(e);
+    if (e != void(0)) {
+      estados.push(e);
+    }
   }
 
   for (let t of automato.transicoes) {
