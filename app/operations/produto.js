@@ -12,7 +12,7 @@ function produto(a1, a2) {
 
       let novo_estado = {
         id: novos_estados.length,
-        nome: valor.join()
+        nome: [estado_a.nome, estado_b.nome].join()
       };
 
       ids.set(novo_estado.id, valor);

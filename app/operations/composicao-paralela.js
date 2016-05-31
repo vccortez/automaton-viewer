@@ -12,7 +12,7 @@ function composicaoParalela(a1, a2) {
 
       let novo_estado = {
         id: novos_estados.length,
-        nome: valor.join()
+        nome: [estado_a.nome, estado_b.nome].join()
       };
 
       ids.set(novo_estado.id, valor);
@@ -45,57 +45,45 @@ function composicaoParalela(a1, a2) {
   for (let novo_estado of novos_estados) {
     let oldId = ids.get(novo_estado.id);
 
-    for (let t1 of a1.transicoes) {
-      if (t1.de == oldId[0]) {
-        if (eventos_b.has(t1.evento)) {
-          for (let tt of a2.transicoes) {
-            if (tt.evento == t1.evento && tt.de == oldId[1]) {
-              novas_transicoes.push({
-                de: novo_estado.id,
-                para: map.get([t1.para, tt.para].join()),
-                evento: t1.evento
-              });
-            }
-          }
-        } else {
+    let transicoes = a1.transicoes.filter(t => t.de == oldId[0]);
+
+    for (let t1 of transicoes) {
+      if (eventos_b.has(t1.evento)) {
+        let tt = a2.transicoes.find(t => t.de == oldId[1] && t.evento == t1.evento);
+        if (tt != void(0)) {
           novas_transicoes.push({
             de: novo_estado.id,
-            para: map.get([t1.para, oldId[1]].join()),
+            para: map.get([t1.para, tt.para].join()),
             evento: t1.evento
           });
         }
+      } else {
+        novas_transicoes.push({
+          de: novo_estado.id,
+          para: map.get([t1.para, oldId[1]].join()),
+          evento: t1.evento
+        });
       }
     }
 
-    for (let t2 of a2.transicoes) {
-      if (t2.de == oldId[1]) {
-        if (eventos_a.has(t2.evento)) {
-          for (let tt of a1.transicoes) {
-            if (tt.evento == t2.evento && tt.de == oldId[0]) {
-              if (novas_transicoes.every(t => {
-                return (
-                  novo_estado.id != t.de && map.get([tt.para, t2.para].join()) != t.para && t2.evento != t.evento);
-                })) {
-                novas_transicoes.push({
-                  de: novo_estado.id,
-                  para: map.get([tt.para, t2.para].join()),
-                  evento: t2.evento
-                });
-              }
-            }
-          }
-        } else {
-          if (novas_transicoes.every(t => {
-            return (
-              novo_estado.id != t.de && map.get([oldId[0],t2.para].join()) != t.para && t2.evento != t.evento );
-            })) {
-            novas_transicoes.push({
-              de: novo_estado.id,
-              para: map.get([oldId[0],t2.para].join()),
-              evento: t2.evento
-            });
-          }
+    transicoes = a2.transicoes.filter(t => t.de == oldId[1]);
+
+    for (let t2 of transicoes) {
+      if (eventos_a.has(t2.evento)) {
+        let tt = a1.transicoes.find(t => t.de == oldId[0] && t.evento == t2.evento);
+        if (tt != void(0)) {
+          novas_transicoes.push({
+            de: novo_estado.id,
+            para: map.get([tt.para, t2.para].join()),
+            evento: t2.evento
+          });
         }
+      } else {
+        novas_transicoes.push({
+          de: novo_estado.id,
+          para: map.get([oldId[0], t2.para].join()),
+          evento: t2.evento
+        });
       }
     }
   }
